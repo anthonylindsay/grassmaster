@@ -1,240 +1,239 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>Farmomatic</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<script language="javascript" type="text/javascript" src="jquery.min.js"></script>
-		
-		<script language="javascript" type="text/javascript" src="basic.js"></script>
-    	<link rel="stylesheet" href="basic.css" type="text/css" />
-    	<META NAME="Generator" CONTENT="Nokia WRT plug-in for Aptana Studio 2.3.0" />
-	</head>
-	<body onLoad="javascript:init();">
-		
-		<!--home screen-->
-		<div id="home-screen">
-			<div id="masthead" >GrassMaster Pro </div>
-			<div id="fields-menu-item" class="menu-item">fields</div>
-			<div id="cover-menu-item" class="menu-item">cover</div>
-			<div id="graphs-menu-item" class="menu-item">graphs</div>
-			<div id="reports-menu-item" class="menu-item">reports</div>
-			<div id="settings-menu-item" class="menu-item">settings</div>
-			<div id="load-save-menu-item" class="menu-item">save/load data </div>
-			
-		</div>
-		<div class="clearfix">&nbsp;</div>
-		<!--cover screen-->
-		<div id="cover-screen">
-			<h2>Cover</h2>
-			<div id="cover-data">
-				<div class="header">field cover</div>
-				<div id="fields-item-wrapper">
-					<table id="cover-items">
-						<thead>
-							<tr>
-								<th>field</th>
-								<th>area</th>
-								<th>cover</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td class="id">1</td>
-								<td class="area">0.8</td>
-								<td class="cover">600</td>
-								<td class="edit-button"></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-		<div class="clearfix">&nbsp;</div>
-		<!--fields screen-->
-		<div id="fields-screen">
-			<h2>Fields</h2>
-		    <div id="enter-new-field-button">new field</div>
-			<div id="fields-data">
-				<div class="header">my fields</div>
-				<table id="fields-items">
-					<thead>
-						<tr id="field-listing-table-header">
-							<th>field</th>
-							<th>area</th>
-							<th></th>	
-						</tr>
-					</thead>
-					
-					<tbody>
-						<tr>
-							<td class="id">1</td>
-							<td class="area">0.8ha</td>
-							<td class="edit-button"></td>
-						</tr>
-					</tbody>	
-				</table>
-			</div>
-		<div class="clearfix"></div>
-		</div>
-		
-		<!--new field screen-->
-		<div id="new-field-screen">
-			<div class="header">enter a new field</div>
-			<div>field no: <span id="new-field-id">1</span></div>
-			<form id="new-field-form">
-				<input type="hidden" value="" id="new-field-form-id" />
-				<div id="field-name-option"></div>
-				area: <input type="text" id="new-field-form-area" />
-			</form>
-			<div id="new-field-save-button" class="save">save</div>
-			<div id="new-field-cancel-button" class="cancel">cancel</div>
-			<div class="clearfix"></div>
-		</div>
-		
-		<!--edit field screen-->
-		<div id="edit-field-screen">
-			<div class="header">edit field <span id="edit-field-id">1</span></div>
-			<form id="edit-field-form">
-				<input type="hidden" value="" id="edit-field-form-id" />
-				<div >name: <input type="text" id="edit-field-name-option" /></div>
-				area: <input type="text" id="edit-field-form-area" />
-			</form>
-			
-			<div id="edit-field-save-button" class="save">save</div>
-			<div id="edit-field-cancel-button" class="cancel">cancel</div>
-			<div id="edit-field-delete-button" class="delete">delete</div>
-			<div class="clearfix"></div>
-			
-		</div>
-		
-		<!--new cover screen-->
-		<div id="new-cover-screen">
-			<div class="header">enter new cover</div>
-			<div>field no: <span id="new-cover-field-id">1</span></div>
-			<div id="new-cover-field-name-option"></div>
-			<div>area: <span id="new-cover-field-area">1</span>ha</div>
-			<div>cover: <span id="new-cover-field-cover">1</span></div>
-			<div>last date: <span id="new-cover-field-date">1</span></div>
-			<form id="new-cover-form">
-				<input type="hidden" value="" id="cover-form-id" />
-				<input type="hidden" value="" id="cover-form-area" />
-				cover: <input type="text" id="cover-form-cover" />
-			</form>
-			<div id="cover-save-button" class="save">save</div>
-			<div id="cover-cancel-button" class="cancel">cancel</div>
-			<div class="clearfix"></div>
-		</div>
-		
-		<!--graphs screen-->
-		<div id="graphs-screen">
-			<h2>Graphs</h2>
-			<div class='header'>relative cover per field</div>
-			<div id="graph-legend">Highest field cover=<span id="graph-legend-value"></span></div>
-			<div id="chart">test</div>
-			<div class="clearfix"></div>	
-		</div>
-		
-		<!--reports screen-->
-		<div id="reports-screen">
-			<h2>Reports</h2>
-			<div id="calculations"></div>
-			
-			<div id="fields-report">
-				<div class="header">cover report</div>
-				<table class="fields-items">
-					<thead>
-						<tr>
-							<th>field</th>
-							<th>area<br />hA</th>
-							<th>cover/<br />hA</th>
-							<th>date</th>
-							<th>cover/<br />field</th>			
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="">1</td>
-							<td class="">0.8</td>
-							<td class="">600</td>
-							<td class="">22/03/11</td>
-							<td class=""></td>
-							
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		
-		<!--settings screen-->
-		<div id="settings-screen">
-			<h2>Settings</h2>
+  <head>
+    <title>Farmomatic</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script language="javascript" type="text/javascript" src="jquery.min.js"></script>
 
-			<form id="settings-form">
-				<p>Do you want to have names for your fields, or will numbers suffice?</p> 
-					<select name="name" id="name-setting"> 
-					
-						<option value=1>Names</option>
-						<option value=0>Numbers</option>
-					</select>
+    <script language="javascript" type="text/javascript" src="basic.js"></script>
+      <link rel="stylesheet" href="basic.css" type="text/css" />
+      <META NAME="Generator" CONTENT="Nokia WRT plug-in for Aptana Studio 2.3.0" />
+  </head>
+  <body onLoad="javascript:init();">
 
-				<p>What is your target grass yield?</p> <input type="text" id="grass-target" />
-			</form>
-			<div id="settings-save-button" class="save">save</div>
-			<div id="reset-menu-item" class="cancel">reset </div>
-		</div>
-		<!--load/save screen-->
-		<div id="load-save-screen">
-			<h2>load/save</h2>
-			<p>Load saved data or store your current data for reference.</p> <p>Choose a save slot to load from or save to.</p>
-			<form id="load-save-form">
-				<select name="save-slot" id="save-slot"> 
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-				</select>
-			</form>
-			<p>Note that loading data from a save slot will overwrite the data currently in the application. 
-			If you wish to keep your current data please save it to another slot first!</p>
-				
-			<div id="save-data-button" class="save">save data</div>
-			<div id="load-data-button" class="cancel">load data</div>
-			<div style="clear:both;">&nbsp;</p></div>
-		</div>
-		<!--info screen-->
-		<div id="info-screen">
-			<h2>Help</h2>
-			<p>About GrassMaster Pro</p>
-			<p>GrassMaster is an application for farmers to help manage grass cover on their farms.</p>
-			<p>Maintaining a constant supply of high-quality green leafy grass can be easily achieved by walking through paddocks 
-			on weekly basis and measuring the amount of grass on the farm. Poor grazing management leads to fluctuation in 
-			pre-grazing yields, with problems of not enough or too much grass on the farm and can result in sub-optimal performance of the herd.</p>
-			<p>This application allows you to keep track of grass cover for your farm and plan livestock movements accordingly.</p>
-			
-			<ol>
-				<li>Create your fields. All you have to fill in is the area. You can edit existing fields or delete them. 
-				
-				<br /><br /><strong>Tip:</strong> turn off predictive text. 
-				As you'll probably need decimals, it is easiest to use the standard non-predictive input function on your phone. If your phone supports this, 
-				try turning the phone sideways to get landscape mode and the larger input options.</li>
-				<li>Tour your farm and measure the cover for your fields. Input the cover once measured for each field. 
-				<br /><br /><strong>Tip:</strong> number mode on your phone's input can be useful here.</li>
-				<li>Show the graphs to see the grass wedge. Try turning your phone on its side for a wider view.</li>
-				<li>Run the reports to get instant calculations, e.g. AFC, total area, total cover, etc.</li>
-			</ol>
-			
-			<p>With GrassMaster Pro you get all the great functionality of the original GrassMaster with these <strong>added features:</strong></p>
-			<ol>
-				<li>Optional field names.</li>
-				<li>Save and archive your entire farm's data for later.</li>
-				<li>Colour coded graph wedge for faster interpretation.</li>
-				<li>New, improved user-interface for easier use.</li>
-			</ol>
-			<p>This software is licenced under an EULA to be found at: http://www.netrunner.ie/
-<br />widgets/EULA.html</p>
+    <!--home screen-->
+    <div id="home-screen">
+      <div id="masthead" >GrassMaster Pro </div>
+      <div id="fields-menu-item" class="menu-item">fields</div>
+      <div id="cover-menu-item" class="menu-item">cover</div>
+      <div id="graphs-menu-item" class="menu-item">graphs</div>
+      <div id="reports-menu-item" class="menu-item">reports</div>
+      <div id="settings-menu-item" class="menu-item">settings</div>
+      <div id="load-save-menu-item" class="menu-item">save/load data </div>
+
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <!--cover screen-->
+    <div id="cover-screen">
+      <h2>Cover</h2>
+      <div id="cover-data">
+        <div class="header">field cover</div>
+        <div id="fields-item-wrapper">
+          <table id="cover-items">
+            <thead>
+              <tr>
+                <th>field</th>
+                <th>area</th>
+                <th>cover</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="id">1</td>
+                <td class="area">0.8</td>
+                <td class="cover">600</td>
+                <td class="edit-button"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <!--fields screen-->
+    <div id="fields-screen">
+      <h2>Fields</h2>
+        <div id="enter-new-field-button">new field</div>
+      <div id="fields-data">
+        <div class="header">my fields</div>
+        <table id="fields-items">
+          <thead>
+            <tr id="field-listing-table-header">
+              <th>field</th>
+              <th>area</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td class="id">1</td>
+              <td class="area">0.8ha</td>
+              <td class="edit-button"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <div class="clearfix"></div>
+    </div>
+
+    <!--new field screen-->
+    <div id="new-field-screen">
+      <div class="header">enter a new field</div>
+      <div>field no: <span id="new-field-id">1</span></div>
+      <form id="new-field-form">
+        <input type="hidden" value="" id="new-field-form-id" />
+        <div id="field-name-option"></div>
+        area: <input type="text" id="new-field-form-area" />
+      </form>
+      <div id="new-field-save-button" class="save">save</div>
+      <div id="new-field-cancel-button" class="cancel">cancel</div>
+      <div class="clearfix"></div>
+    </div>
+
+    <!--edit field screen-->
+    <div id="edit-field-screen">
+      <div class="header">edit field <span id="edit-field-id">1</span></div>
+      <form id="edit-field-form">
+        <input type="hidden" value="" id="edit-field-form-id" />
+        <div >name: <input type="text" id="edit-field-name-option" /></div>
+        area: <input type="text" id="edit-field-form-area" />
+      </form>
+
+      <div id="edit-field-save-button" class="save">save</div>
+      <div id="edit-field-cancel-button" class="cancel">cancel</div>
+      <div id="edit-field-delete-button" class="delete">delete</div>
+      <div class="clearfix"></div>
+
+    </div>
+
+    <!--new cover screen-->
+    <div id="new-cover-screen">
+      <div class="header">enter new cover</div>
+      <div>field no: <span id="new-cover-field-id">1</span></div>
+      <div id="new-cover-field-name-option"></div>
+      <div>area: <span id="new-cover-field-area">1</span>ha</div>
+      <div>cover: <span id="new-cover-field-cover">1</span></div>
+      <div>last date: <span id="new-cover-field-date">1</span></div>
+      <form id="new-cover-form">
+        <input type="hidden" value="" id="cover-form-id" />
+        <input type="hidden" value="" id="cover-form-area" />
+        cover: <input type="text" id="cover-form-cover" />
+      </form>
+      <div id="cover-save-button" class="save">save</div>
+      <div id="cover-cancel-button" class="cancel">cancel</div>
+      <div class="clearfix"></div>
+    </div>
+
+    <!--graphs screen-->
+    <div id="graphs-screen">
+      <h2>Graphs</h2>
+      <div class='header'>relative cover per field</div>
+      <div id="graph-legend">Highest field cover=<span id="graph-legend-value"></span></div>
+      <div id="chart">test</div>
+      <div class="clearfix"></div>
+    </div>
+
+    <!--reports screen-->
+    <div id="reports-screen">
+      <h2>Reports</h2>
+      <div id="calculations"></div>
+
+      <div id="fields-report">
+        <div class="header">cover report</div>
+        <table class="fields-items">
+          <thead>
+            <tr>
+              <th>field</th>
+              <th>area<br />hA</th>
+              <th>cover/<br />hA</th>
+              <th>date</th>
+              <th>cover/<br />field</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="">1</td>
+              <td class="">0.8</td>
+              <td class="">600</td>
+              <td class="">22/03/11</td>
+              <td class=""></td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!--settings screen-->
+    <div id="settings-screen">
+      <h2>Settings</h2>
+
+      <form id="settings-form">
+        <p>Do you want to have names for your fields, or will numbers suffice?</p>
+          <select name="name" id="name-setting">
+
+            <option value=1>Names</option>
+            <option value=0>Numbers</option>
+          </select>
+
+        <p>What is your target grass yield?</p> <input type="text" id="grass-target" />
+      </form>
+      <div id="settings-save-button" class="save">save</div>
+      <div id="reset-menu-item" class="cancel">reset </div>
+    </div>
+    <!--load/save screen-->
+    <div id="load-save-screen">
+      <h2>load/save</h2>
+      <p>Load saved data or store your current data for reference.</p> <p>Choose a save slot to load from or save to.</p>
+      <form id="load-save-form">
+        <select name="save-slot" id="save-slot">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+      </form>
+      <p>Note that loading data from a save slot will overwrite the data currently in the application.
+      If you wish to keep your current data please save it to another slot first!</p>
+
+      <div id="save-data-button" class="save">save data</div>
+      <div id="load-data-button" class="cancel">load data</div>
+      <div style="clear:both;">&nbsp;</p></div>
+    </div>
+    <!--info screen-->
+    <div id="info-screen">
+      <h2>Help</h2>
+      <p>About GrassMaster Pro</p>
+      <p>GrassMaster is an application for farmers to help manage grass cover on their farms.</p>
+      <p>Maintaining a constant supply of high-quality green leafy grass can be easily achieved by walking through paddocks
+      on weekly basis and measuring the amount of grass on the farm. Poor grazing management leads to fluctuation in
+      pre-grazing yields, with problems of not enough or too much grass on the farm and can result in sub-optimal performance of the herd.</p>
+      <p>This application allows you to keep track of grass cover for your farm and plan livestock movements accordingly.</p>
+
+      <ol>
+        <li>Create your fields. All you have to fill in is the area. You can edit existing fields or delete them.
+
+        <br /><br /><strong>Tip:</strong> turn off predictive text.
+        As you'll probably need decimals, it is easiest to use the standard non-predictive input function on your phone. If your phone supports this,
+        try turning the phone sideways to get landscape mode and the larger input options.</li>
+        <li>Tour your farm and measure the cover for your fields. Input the cover once measured for each field.
+        <br /><br /><strong>Tip:</strong> number mode on your phone's input can be useful here.</li>
+        <li>Show the graphs to see the grass wedge. Try turning your phone on its side for a wider view.</li>
+        <li>Run the reports to get instant calculations, e.g. AFC, total area, total cover, etc.</li>
+      </ol>
+
+      <p>With GrassMaster Pro you get all the great functionality of the original GrassMaster with these <strong>added features:</strong></p>
+      <ol>
+        <li>Optional field names.</li>
+        <li>Save and archive your entire farm's data for later.</li>
+        <li>Colour coded graph wedge for faster interpretation.</li>
+        <li>New, improved user-interface for easier use.</li>
+      </ol>
+      <p>This software is free for use under the GPLv3.</p>
 
 
 <div style="clear:both;">&nbsp;</p></div>
@@ -242,9 +241,9 @@
 <div style="clear:both;"></div>
 <img src="images/netrunnerLogo150.jpg">
 
-			
-			</div>
-		<!--toolbar screen-->
-		<div id="toolbar"></div>
-	</body>
+
+      </div>
+    <!--toolbar screen-->
+    <div id="toolbar"></div>
+  </body>
 </html>
