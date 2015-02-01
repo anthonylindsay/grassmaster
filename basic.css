@@ -1,0 +1,176 @@
+/*body*/
+body{
+	font-family:georgia;
+	font-style:italic;
+	color:#727272;
+	font-size:7mm;}
+
+.clearfix{clear:both;}
+
+table{
+	border-collapse:collapse;
+	width:100%;
+	padding:0px;
+	margin:0px;
+	}
+td{
+	margin:0px;
+	border: 1px dotted #eaeaea;
+	border-bottom: 1px solid #c0c0c0;
+	padding-top:5px;
+	padding-bottom:5px;
+	}
+
+#fields-items td, #cover-items td,#fields-report td {text-align:center;}
+
+tr{}
+
+form{
+	margin-top:10px;
+	margin-bottom:10px;
+	}
+
+h2{
+	margin-top:0px;
+	background: url(images/red-cross.png) no-repeat bottom right;
+}	
+	/*
+masthead
+*/
+
+#masthead{
+	background:#c0c0c0 url(images/Info.png) 95% 50% no-repeat;
+	padding:10px;
+	border-bottom:2px solid #80ff00;
+	margin-bottom:10px;
+	color:#3b3b3b;
+	
+}
+
+	
+/*menu screen*/
+.menu-item{
+	line-height: 1.9em;	
+	border-bottom:1px solid #e4e4e4;
+	font-size:1.2em;
+	}
+#fields-menu-item{
+	background:url(images/fields.png) no-repeat right bottom;
+}
+#cover-menu-item{
+	background:url(images/cover.png) no-repeat right bottom;
+}
+#graphs-menu-item{
+	background:url(images/graphs.png) no-repeat right bottom;
+}
+#reports-menu-item{
+	background:url(images/papers.png) no-repeat right bottom;
+}
+#settings-menu-item{
+	background:url(images/spanner.png) no-repeat right bottom;
+}
+#load-save-menu-item{
+	background:url(images/disk.png) no-repeat right bottom;
+}
+/*
+fields screen
+*/
+#enter-new-field-button{
+	background:#eaeaea url(images/green-cross.png) no-repeat 5px ;
+	padding:8px;
+	padding-left:50px;
+	border-top:1px solid #727272;
+	border-bottom:1px solid #727272;
+	text-align:center;
+}
+.header{
+	text-align:center;
+	margin-top:10px;
+	padding:5px;
+	border-bottom:1px solid #727272;
+	}
+
+.edit-button{
+	background:url(images/pencil.png) no-repeat center;
+	width:40px;
+	}
+
+/*
+new field screen
+*/
+.save{
+	float:left;
+	}
+.cancel{
+	float:right;
+}
+.save,.cancel{
+	border:1px solid #727272;
+	background:#eaeaea;
+	padding:5px;
+}
+
+#edit-field-delete-button{
+	margin:auto;
+	border:1px solid #727272;
+	background:#eaeaea url(images/red-cross.png) no-repeat bottom right;
+	padding:5px;
+	width:110px;
+		
+	}
+
+/*
+reports screen
+*/
+#fields-report table{
+	font-size:0.7em;
+	width:100%;
+}
+
+
+/*
+graphs
+*/
+#graph-legend{font-size:6mm}
+.graphBar {
+	border-bottom: none;
+	font-size:6mm;
+	list-style:none;
+	margin: 0;
+	padding: 0;
+	position:relative;
+	text-align: center;
+	width: 39px;
+	float:left;
+	bottom: 0px;
+	background: #666 ;
+	border: 1px solid #555;
+	}
+
+#chart{
+	border-top: 3px solid #333;
+	font: 9px Helvetica, Geneva, sans-serif;
+	height: 200px;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	margin-top:200px;
+	}
+
+#graphs-screen{background-color:#fefefe;}
+	
+div.graphBar{color:red;}
+
+#reset-menu-item{color:red;font-weight:bold;border:}
+
+/*
+info/about screen
+*/
+#info-screen p, #info-screen li{font-size:6mm;}
+#info-screen li{margin-top:10px;margin-bottom:10px;}
+
+/*
+load save screen
+
+*/
+#load-save-screen p{font-size:6mm;}
