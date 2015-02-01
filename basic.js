@@ -13,669 +13,669 @@ var $newCoverScreen;
 var $settingsScreen;
 var $loadSaveScreen;
 var fieldData;
-var saveNamesArray;	
-			  
+var saveNamesArray;
+
 function init()
 {
-	
-	
+
+
 // set up the data structure
-	fieldData=new Array();
-	var fieldDataItem =eval({"id":"0","area":"0","cover":"0","date":"01/01/11","name":"test"});
-	fieldData[0]=fieldDataItem;
+  fieldData=new Array();
+  var fieldDataItem =eval({"id":"0","area":"0","cover":"0","date":"01/01/11","name":"test"});
+  fieldData[0]=fieldDataItem;
 
-	saveNamesArray=new Array('save1','save2','save3','save4','save5');
+  saveNamesArray=new Array('save1','save2','save3','save4','save5');
 
-// set up the data storage		
-	if ((typeof widget.preferenceForKey('data') == undefined) || (widget.preferenceForKey('data') == null)) {
-		widget.setPreferenceForKey('', 'data');
-		storeData(fieldData);
-	}
+// set up the data storage
+  if ((typeof widget.preferenceForKey('data') == undefined) || (widget.preferenceForKey('data') == null)) {
+    widget.setPreferenceForKey('', 'data');
+    storeData(fieldData);
+  }
 
 //settings storage: there's only 2 settings. 1) do you want names or numbers and 2) the target cover.
-	if ((typeof widget.preferenceForKey('settings') == undefined) || (widget.preferenceForKey('settings') == null)) {
-		widget.setPreferenceForKey('0,1100', 'settings');
-	}
+  if ((typeof widget.preferenceForKey('settings') == undefined) || (widget.preferenceForKey('settings') == null)) {
+    widget.setPreferenceForKey('0,1100', 'settings');
+  }
 
 // set up save slots. 1 preferenceForKey per save slot
-	if ((typeof widget.preferenceForKey('save1') == undefined) || (widget.preferenceForKey('save1') == null)) {
-		widget.setPreferenceForKey('', 'save1');
-	}
-	if ((typeof widget.preferenceForKey('save2') == undefined) || (widget.preferenceForKey('save2') == null)) {
-		widget.setPreferenceForKey('', 'save2');
-	}
-	if ((typeof widget.preferenceForKey('save3') == undefined) || (widget.preferenceForKey('save3') == null)) {
-		widget.setPreferenceForKey('', 'save3');
-	}
-	if ((typeof widget.preferenceForKey('save4') == undefined) || (widget.preferenceForKey('save4') == null)) {
-		widget.setPreferenceForKey('', 'save4');
-	}
-	if ((typeof widget.preferenceForKey('save5') == undefined) || (widget.preferenceForKey('save5') == null)) {
-		widget.setPreferenceForKey('', 'save5');
-	}
-	if ((typeof widget.preferenceForKey('saveList') == undefined) || (widget.preferenceForKey('saveList') == null) || (widget.preferenceForKey('saveList') == '')) {
-		widget.setPreferenceForKey('save1,save2,save3,save4,save5', 'saveList');
-	}
-	// find all the major screens and set them as variables
-	
-	$homeScreen=$("#home-screen");
-	$coverScreen=$("#cover-screen");
-	$fieldsScreen=$("#fields-screen");
-	$graphsScreen=$("#graphs-screen");
-	$reportsScreen=$("#reports-screen");
-	$editFieldScreen=$("#edit-field-screen");
-	$newFieldScreen=$("#new-field-screen");
-	$newCoverScreen=$("#new-cover-screen");
-	$settingsScreen=$("#settings-screen");
-	$loadSaveScreen=$("#load-save-screen");
-	$menu=$(".menu-item");
-	
-	//make the menu work - click handlers & toggle functions
-	$("#masthead").click(function(e){
-			
-			initialise();
-			$menu.hide();
-			$("#info-screen").toggle();
-			$("#name-setting").val(parseSettings("name"));
-			$("#grass-target").val(parseSettings("target"));
-			});
-	
-	$("#fields-menu-item").click(function(e){
+  if ((typeof widget.preferenceForKey('save1') == undefined) || (widget.preferenceForKey('save1') == null)) {
+    widget.setPreferenceForKey('', 'save1');
+  }
+  if ((typeof widget.preferenceForKey('save2') == undefined) || (widget.preferenceForKey('save2') == null)) {
+    widget.setPreferenceForKey('', 'save2');
+  }
+  if ((typeof widget.preferenceForKey('save3') == undefined) || (widget.preferenceForKey('save3') == null)) {
+    widget.setPreferenceForKey('', 'save3');
+  }
+  if ((typeof widget.preferenceForKey('save4') == undefined) || (widget.preferenceForKey('save4') == null)) {
+    widget.setPreferenceForKey('', 'save4');
+  }
+  if ((typeof widget.preferenceForKey('save5') == undefined) || (widget.preferenceForKey('save5') == null)) {
+    widget.setPreferenceForKey('', 'save5');
+  }
+  if ((typeof widget.preferenceForKey('saveList') == undefined) || (widget.preferenceForKey('saveList') == null) || (widget.preferenceForKey('saveList') == '')) {
+    widget.setPreferenceForKey('save1,save2,save3,save4,save5', 'saveList');
+  }
+  // find all the major screens and set them as variables
 
-			initialise();
-			$menu.hide();
-			$fieldsScreen.toggle();
-			listFields();
-			});
-	$("#cover-menu-item").click(function(e){
-			initialise();
-			$menu.hide();
-			$coverScreen.toggle();
-			listCover();
-			});
-	$("#graphs-menu-item").click(function(e){
-		initialise();
-		$menu.hide();
-		$graphsScreen.toggle();
-		doGraphs();
-		
-		});
-	
-	$("#reports-menu-item").click(function(e){
-			initialise();
-			$menu.hide();
-			$reportsScreen.toggle();
-			doCalculations();
-			});
-	$("#settings-menu-item").click(function(e){
-			initialise();
-			$menu.hide();
-			$settingsScreen.toggle();
-			doSettings();
-			});
-	$("#reset-menu-item").click(function(e){
-			initialise();
-			if (confirm("do you really want to reset the application and delete all its data?")) {
-				fieldData=new Array();
-				fieldDataItem = eval({
-					"id": "0",
-					"area": "0",
-					"cover": "0",
-					"date": "01/01/11"
-				});
-				fieldData[0] = fieldDataItem;
-				widget.setPreferenceForKey('', 'data');
-				storeData(fieldData);
-				widget.setPreferenceForKey('', 'save1');
-				widget.setPreferenceForKey('', 'save2');
-				widget.setPreferenceForKey('', 'save3');
-				widget.setPreferenceForKey('', 'save4');
-				widget.setPreferenceForKey('', 'save5');
-				widget.setPreferenceForKey('save1,save2,save3,save4,save5', 'saveList');
-				widget.setPreferenceForKey('0,1100', 'settings')
-			}
-			});
-	$("#enter-new-field-button").click(function(e){
-			$newFieldScreen.toggle();
-			$fieldsScreen.toggle();
-			$homeScreen.toggle();
-			
-			$("#new-field-id").html(getNextID);
-			$("#new-field-form-area").val('');
-			
-			if(nameIsOn()==1)$("#field-name-option").html("name: <input type='text' id='new-field-form-name' />");
-			else $("#field-name-option").html("");
+  $homeScreen=$("#home-screen");
+  $coverScreen=$("#cover-screen");
+  $fieldsScreen=$("#fields-screen");
+  $graphsScreen=$("#graphs-screen");
+  $reportsScreen=$("#reports-screen");
+  $editFieldScreen=$("#edit-field-screen");
+  $newFieldScreen=$("#new-field-screen");
+  $newCoverScreen=$("#new-cover-screen");
+  $settingsScreen=$("#settings-screen");
+  $loadSaveScreen=$("#load-save-screen");
+  $menu=$(".menu-item");
 
-			});
-	$("#enter-new-cover-button").click(function(e){
-			$newCoverScreen.toggle();
-			$fieldsScreen.toggle();
-			$homeScreen.toggle();
-			
-			});
-	$("#new-field-save-button").click(function(e){
-			
-			saveField();
-			});
-	$("#new-cover-save-button").click(function(e){
-			saveCover();
-			});
-	$(".cancel").click(function(e){initialise();});
-	
-	$("#edit-field-save-button").click(function(e){
-									var i=$("#edit-field-id").html();
-									var a=$("#edit-field-form-area").val();
-									var n=$("#edit-field-name-option").val();
-									saveFieldEdit(i,a,n);
-									});
-	$("#edit-field-delete-button").click(function(e){
-									var i=$("#edit-field-id").html();
-									deleteField(i);
-									});
-	$("#cover-save-button").click(function(e){
-									var i=$("#new-cover-field-id").html();
-									var a=$("#cover-form-cover").val();
-									if(!isNaN(a))saveCover(i,a);
-									else {alert("Invalid Input. Numbers only please!");
-									initialise();}
-									});
-	$("#settings-save-button").click(function(e){
-				saveSettings();
-				initialise();
-				});
+  //make the menu work - click handlers & toggle functions
+  $("#masthead").click(function(e){
+
+      initialise();
+      $menu.hide();
+      $("#info-screen").toggle();
+      $("#name-setting").val(parseSettings("name"));
+      $("#grass-target").val(parseSettings("target"));
+      });
+
+  $("#fields-menu-item").click(function(e){
+
+      initialise();
+      $menu.hide();
+      $fieldsScreen.toggle();
+      listFields();
+      });
+  $("#cover-menu-item").click(function(e){
+      initialise();
+      $menu.hide();
+      $coverScreen.toggle();
+      listCover();
+      });
+  $("#graphs-menu-item").click(function(e){
+    initialise();
+    $menu.hide();
+    $graphsScreen.toggle();
+    doGraphs();
+
+    });
+
+  $("#reports-menu-item").click(function(e){
+      initialise();
+      $menu.hide();
+      $reportsScreen.toggle();
+      doCalculations();
+      });
+  $("#settings-menu-item").click(function(e){
+      initialise();
+      $menu.hide();
+      $settingsScreen.toggle();
+      doSettings();
+      });
+  $("#reset-menu-item").click(function(e){
+      initialise();
+      if (confirm("do you really want to reset the application and delete all its data?")) {
+        fieldData=new Array();
+        fieldDataItem = eval({
+          "id": "0",
+          "area": "0",
+          "cover": "0",
+          "date": "01/01/11"
+        });
+        fieldData[0] = fieldDataItem;
+        widget.setPreferenceForKey('', 'data');
+        storeData(fieldData);
+        widget.setPreferenceForKey('', 'save1');
+        widget.setPreferenceForKey('', 'save2');
+        widget.setPreferenceForKey('', 'save3');
+        widget.setPreferenceForKey('', 'save4');
+        widget.setPreferenceForKey('', 'save5');
+        widget.setPreferenceForKey('save1,save2,save3,save4,save5', 'saveList');
+        widget.setPreferenceForKey('0,1100', 'settings')
+      }
+      });
+  $("#enter-new-field-button").click(function(e){
+      $newFieldScreen.toggle();
+      $fieldsScreen.toggle();
+      $homeScreen.toggle();
+
+      $("#new-field-id").html(getNextID);
+      $("#new-field-form-area").val('');
+
+      if(nameIsOn()==1)$("#field-name-option").html("name: <input type='text' id='new-field-form-name' />");
+      else $("#field-name-option").html("");
+
+      });
+  $("#enter-new-cover-button").click(function(e){
+      $newCoverScreen.toggle();
+      $fieldsScreen.toggle();
+      $homeScreen.toggle();
+
+      });
+  $("#new-field-save-button").click(function(e){
+
+      saveField();
+      });
+  $("#new-cover-save-button").click(function(e){
+      saveCover();
+      });
+  $(".cancel").click(function(e){initialise();});
+
+  $("#edit-field-save-button").click(function(e){
+                  var i=$("#edit-field-id").html();
+                  var a=$("#edit-field-form-area").val();
+                  var n=$("#edit-field-name-option").val();
+                  saveFieldEdit(i,a,n);
+                  });
+  $("#edit-field-delete-button").click(function(e){
+                  var i=$("#edit-field-id").html();
+                  deleteField(i);
+                  });
+  $("#cover-save-button").click(function(e){
+                  var i=$("#new-cover-field-id").html();
+                  var a=$("#cover-form-cover").val();
+                  if(!isNaN(a))saveCover(i,a);
+                  else {alert("Invalid Input. Numbers only please!");
+                  initialise();}
+                  });
+  $("#settings-save-button").click(function(e){
+        saveSettings();
+        initialise();
+        });
 
 // load/save data
-	$("#load-save-menu-item").click(function(e){
-		initialise();
-		$menu.hide();
-		$loadSaveScreen.toggle();
-		doLoadSave();
-				});	
-	$("#save-data-button").click(function(e){
-		saveData($("#save-slot").val());
-				});	
-	$("#load-data-button").click(function(e){
-		loadData($("#save-slot").val());
-				});	
-	
-	
-	//set up click handling for dynamic listings
-	$("#fields-screen .edit-button").live("click",function(e){
-		editField($(this).attr('title'));
-	});
-	
-	//set up click handling for dynamic listings
-	$("#cover-screen .edit-button").live("click",function(e){
-		editCover($(this).attr('title'));
-	});
-	
-	//close a screen
-	$("h2").click(function(e){
-		initialise();
-				});	
-	
-	
-	initialise();
+  $("#load-save-menu-item").click(function(e){
+    initialise();
+    $menu.hide();
+    $loadSaveScreen.toggle();
+    doLoadSave();
+        });
+  $("#save-data-button").click(function(e){
+    saveData($("#save-slot").val());
+        });
+  $("#load-data-button").click(function(e){
+    loadData($("#save-slot").val());
+        });
+
+
+  //set up click handling for dynamic listings
+  $("#fields-screen .edit-button").live("click",function(e){
+    editField($(this).attr('title'));
+  });
+
+  //set up click handling for dynamic listings
+  $("#cover-screen .edit-button").live("click",function(e){
+    editCover($(this).attr('title'));
+  });
+
+  //close a screen
+  $("h2").click(function(e){
+    initialise();
+        });
+
+
+  initialise();
 }
 
 // write the fields data array to storage
 function storeData(data){
-	var success=0;
-	var d=JSON.stringify(data);
-	try {	
-	widget.setPreferenceForKey(d,'data');
+  var success=0;
+  var d=JSON.stringify(data);
+  try {
+  widget.setPreferenceForKey(d,'data');
 } catch (e) {
-	alert("error writing to storage. "+e);
+  alert("error writing to storage. "+e);
 }
 
 }
 
 // read the fields data array from storage
 function readData(){
-	var d=eval(widget.preferenceForKey('data'));
-	
-	fieldData=d;
-	
+  var d=eval(widget.preferenceForKey('data'));
+
+  fieldData=d;
+
 }
 
 //parse settings to see if you want field names and what the target cover is
 
 function parseSettings(setting){
-	var settingsString=widget.preferenceForKey('settings');
-	if(setting=="name")return settingsString.substring(0,1);
-	else return settingsString.substring(2,settingsString.length);
-	
+  var settingsString=widget.preferenceForKey('settings');
+  if(setting=="name")return settingsString.substring(0,1);
+  else return settingsString.substring(2,settingsString.length);
+
 }
 
 function initialise(){
-	//	set up - hide everything but the menu
-	$menu.show();
-	$coverScreen.hide();
-	$fieldsScreen.hide();
-	$graphsScreen.hide();
-	$reportsScreen.hide();
-	$newFieldScreen.hide();
-	$newCoverScreen.hide();
-	$editFieldScreen.hide();
-	$settingsScreen.hide();
-	$loadSaveScreen.hide();
-	$("#info-screen").hide();
-	$homeScreen.show();
-	
+  //  set up - hide everything but the menu
+  $menu.show();
+  $coverScreen.hide();
+  $fieldsScreen.hide();
+  $graphsScreen.hide();
+  $reportsScreen.hide();
+  $newFieldScreen.hide();
+  $newCoverScreen.hide();
+  $editFieldScreen.hide();
+  $settingsScreen.hide();
+  $loadSaveScreen.hide();
+  $("#info-screen").hide();
+  $homeScreen.show();
+
 }
 //find the biggest ID in the data store and the return the next one (increment).
 function getNextID(){
-	var nextID = 0;
-		//find the largest ID and add one.
-		for (var i = 0; i < fieldData.length; i++) {
-			var tempID = fieldData[i].id;
-			if (tempID > nextID) 
-				nextID = tempID;
-		}
-		nextID++;
-		return nextID;
+  var nextID = 0;
+    //find the largest ID and add one.
+    for (var i = 0; i < fieldData.length; i++) {
+      var tempID = fieldData[i].id;
+      if (tempID > nextID)
+        nextID = tempID;
+    }
+    nextID++;
+    return nextID;
 }
 
 function nameIsOn(){
-	return parseSettings("name");
+  return parseSettings("name");
 }
 
 function saveField(){
-	readData();
-	var newFieldArea=$("#new-field-form-area").val();
-	var newFieldName=$("#new-field-form-name").val();
-	if (!isNaN(newFieldArea)) {
-		var noOfFields = fieldData.length;
-		var nextID=getNextID();		
-		var newFieldItem = dataItem(nextID, newFieldArea, 0,newFieldName);		
-		fieldData[noOfFields] = newFieldItem;
-		storeData(fieldData);
-		initialise();
-	}
-	else {
-		alert("Invlid input. Numbers only please!");
-		initialise();
-	}
+  readData();
+  var newFieldArea=$("#new-field-form-area").val();
+  var newFieldName=$("#new-field-form-name").val();
+  if (!isNaN(newFieldArea)) {
+    var noOfFields = fieldData.length;
+    var nextID=getNextID();
+    var newFieldItem = dataItem(nextID, newFieldArea, 0,newFieldName);
+    fieldData[noOfFields] = newFieldItem;
+    storeData(fieldData);
+    initialise();
+  }
+  else {
+    alert("Invlid input. Numbers only please!");
+    initialise();
+  }
 }
 
 function dataItem(id,area,cover,name){
-	var n=new Date();
-	var now=n.getDate()+"/"+(n.getMonth())+"/"+n.getFullYear();
-	var d=eval({"id":id,"area":area,"cover":cover,"date":now,"name":name});
-	
-	return d;
+  var n=new Date();
+  var now=n.getDate()+"/"+(n.getMonth())+"/"+n.getFullYear();
+  var d=eval({"id":id,"area":area,"cover":cover,"date":now,"name":name});
+
+  return d;
 }
 
 //fix the month on a date for display.
 function fixDate(d){
 
-	var dd=d.substring(0,d.indexOf('/')+1);
-	var dm=	d.substring(d.indexOf('/')+1,d.length);
-	var dy=dm.substring(dm.indexOf('/'),dm.length);
-	dm=dm.substring(0,dm.indexOf('/'));
-	dm=parseInt(dm);
-	dm++;
+  var dd=d.substring(0,d.indexOf('/')+1);
+  var dm=  d.substring(d.indexOf('/')+1,d.length);
+  var dy=dm.substring(dm.indexOf('/'),dm.length);
+  dm=dm.substring(0,dm.indexOf('/'));
+  dm=parseInt(dm);
+  dm++;
 
-	
-	var returnString=dd+dm+dy;
-	return returnString;
+
+  var returnString=dd+dm+dy;
+  return returnString;
 }
 
 // edit a field to enter new cover
 function editCover(field){
-	readData();
-	var thisDate;
-	var thisCover;
-	var thisArea;
-	var thisFieldName;
-	$("#new-cover-field-id").html(field);
-	for (var i = 1; i < fieldData.length; i++) {
-		if (fieldData[i].id == field) {
-			thisFieldName=fieldData[i].name;
-			thisArea = fieldData[i].area;
-			thisCover = fieldData[i].cover;
-			thisDate = fieldData[i].date;
-			thisDate=fixDate(thisDate);
-		}
-	}
-	if(nameIsOn()==1)$("#new-cover-field-name-option").html("name:"+thisFieldName);
-	$("#new-cover-field-cover").html(thisCover);
-	$("#new-cover-field-area").html(thisArea);
-	$("#new-cover-field-date").html(thisDate);
+  readData();
+  var thisDate;
+  var thisCover;
+  var thisArea;
+  var thisFieldName;
+  $("#new-cover-field-id").html(field);
+  for (var i = 1; i < fieldData.length; i++) {
+    if (fieldData[i].id == field) {
+      thisFieldName=fieldData[i].name;
+      thisArea = fieldData[i].area;
+      thisCover = fieldData[i].cover;
+      thisDate = fieldData[i].date;
+      thisDate=fixDate(thisDate);
+    }
+  }
+  if(nameIsOn()==1)$("#new-cover-field-name-option").html("name:"+thisFieldName);
+  $("#new-cover-field-cover").html(thisCover);
+  $("#new-cover-field-area").html(thisArea);
+  $("#new-cover-field-date").html(thisDate);
 
-	storeData(fieldData);
-	$("#cover-form-cover").val('');
-	$("#new-cover-screen").toggle();
-	$coverScreen.toggle();
-	$homeScreen.toggle();
+  storeData(fieldData);
+  $("#cover-form-cover").val('');
+  $("#new-cover-screen").toggle();
+  $coverScreen.toggle();
+  $homeScreen.toggle();
 }
 //save new cover to data storage
 function saveCover(id,value){
-	readData();
-	for(var i=1;i<fieldData.length;i++){
-		if (fieldData[i].id == id) {
-			fieldData[id].cover = value;
-			fieldData[id].date = now();
-		}
-	}
-	storeData(fieldData);
-	$("#new-cover-screen").hide();
-	$coverScreen.toggle();
-	$homeScreen.toggle();
-	listCover();
+  readData();
+  for(var i=1;i<fieldData.length;i++){
+    if (fieldData[i].id == id) {
+      fieldData[id].cover = value;
+      fieldData[id].date = now();
+    }
+  }
+  storeData(fieldData);
+  $("#new-cover-screen").hide();
+  $coverScreen.toggle();
+  $homeScreen.toggle();
+  listCover();
 }
 //**************************
 //need dynamic cover listings
 //**************************
 
 function listCover(){
-	readData();
-	var coverHTML='';
-	$("#cover-items tbody").html(coverHTML);
-	for(var i=1;i<fieldData.length;i++){
-		coverHTML+='<tr><td class="id">'+fieldData[i].id+'</td><td class="area">'+fieldData[i].area+'ha</td><td class="cover">'+fieldData[i].cover+'</td><td class="edit-button" title="'+fieldData[i].id+'"></td></tr>';
-	}
-	$("#cover-items tbody").html(coverHTML);
-	
+  readData();
+  var coverHTML='';
+  $("#cover-items tbody").html(coverHTML);
+  for(var i=1;i<fieldData.length;i++){
+    coverHTML+='<tr><td class="id">'+fieldData[i].id+'</td><td class="area">'+fieldData[i].area+'ha</td><td class="cover">'+fieldData[i].cover+'</td><td class="edit-button" title="'+fieldData[i].id+'"></td></tr>';
+  }
+  $("#cover-items tbody").html(coverHTML);
+
 }
 
 
 
 // read from persistant storage to data structure and list fields
 function listFields(){
-	readData();
-	if (nameIsOn() == 1)$("#field-listing-table-header").html("<th></th><th>field</th><th>area</th><th></th>");
-	else $("#field-listing-table-header").html("<th>field</th><th>area</th><th></th>");
-	var fieldHTML='';
-	$("#fields-items tbody").html(fieldHTML);
-	for(var i=1;i<fieldData.length;i++){
-		fieldHTML+='<tr><td class="id">'+fieldData[i].id;
-		if (nameIsOn() == 1) fieldHTML+='</td><td class="field-name">'+fieldData[i].name; 
-		fieldHTML+='</td><td class="area">'+fieldData[i].area+'ha</td><td class="edit-button" title="'+fieldData[i].id+'"></td></tr>';
-	}
-	$("#fields-items tbody").html(fieldHTML);
-	storeData(fieldData);
+  readData();
+  if (nameIsOn() == 1)$("#field-listing-table-header").html("<th></th><th>field</th><th>area</th><th></th>");
+  else $("#field-listing-table-header").html("<th>field</th><th>area</th><th></th>");
+  var fieldHTML='';
+  $("#fields-items tbody").html(fieldHTML);
+  for(var i=1;i<fieldData.length;i++){
+    fieldHTML+='<tr><td class="id">'+fieldData[i].id;
+    if (nameIsOn() == 1) fieldHTML+='</td><td class="field-name">'+fieldData[i].name;
+    fieldHTML+='</td><td class="area">'+fieldData[i].area+'ha</td><td class="edit-button" title="'+fieldData[i].id+'"></td></tr>';
+  }
+  $("#fields-items tbody").html(fieldHTML);
+  storeData(fieldData);
 }
 
 
 
 // edit existing fields from dynamic listings
 function editField(id){
-	$("#edit-field-id").html(id);
-	var thisFieldName;
-	var thisFieldArea;
-		for (var i = 1; i < fieldData.length; i++) {
-			
-			if (fieldData[i].id == id) {
-				
-				thisFieldName = fieldData[i].name;
-				thisFieldArea = fieldData[i].area;
-			}
-		}
-	
-	if (nameIsOn() == 1) {
-		$("#edit-field-name-option").val(thisFieldName);
-		$("#edit-field-name-option").show();
-		$("#edit-field-name-option").parent().show();
-	}
-	else $("#edit-field-name-option").parent().hide();
-	$("#edit-field-form-area").val(thisFieldArea);
-	$("#edit-field-screen").toggle();
-	$fieldsScreen.toggle();
-	$homeScreen.toggle();
-	
-	
+  $("#edit-field-id").html(id);
+  var thisFieldName;
+  var thisFieldArea;
+    for (var i = 1; i < fieldData.length; i++) {
+
+      if (fieldData[i].id == id) {
+
+        thisFieldName = fieldData[i].name;
+        thisFieldArea = fieldData[i].area;
+      }
+    }
+
+  if (nameIsOn() == 1) {
+    $("#edit-field-name-option").val(thisFieldName);
+    $("#edit-field-name-option").show();
+    $("#edit-field-name-option").parent().show();
+  }
+  else $("#edit-field-name-option").parent().hide();
+  $("#edit-field-form-area").val(thisFieldArea);
+  $("#edit-field-screen").toggle();
+  $fieldsScreen.toggle();
+  $homeScreen.toggle();
+
+
 }
 
 function saveFieldEdit(id,value,nameValue){
-	
-	if (!isNaN(value)) {
-		readData();
-		for (var i = 0; i < fieldData.length; i++) {
-			if (fieldData[i].id == id) 
-				fieldData[id].area = value;
-				fieldData[id].name = nameValue;
-				
-		}
-	//	alert(id+" "+fieldData[id].area+" "+fieldData[id].name);
-		storeData(fieldData);
-		$("#edit-field-screen").toggle();
-		$fieldsScreen.toggle();
-		$homeScreen.toggle();
-		listFields();
-	}
-	else {
-		alert("Invalid input. Numbers only please!");
-		initialise();
-	}
+
+  if (!isNaN(value)) {
+    readData();
+    for (var i = 0; i < fieldData.length; i++) {
+      if (fieldData[i].id == id)
+        fieldData[id].area = value;
+        fieldData[id].name = nameValue;
+
+    }
+  //  alert(id+" "+fieldData[id].area+" "+fieldData[id].name);
+    storeData(fieldData);
+    $("#edit-field-screen").toggle();
+    $fieldsScreen.toggle();
+    $homeScreen.toggle();
+    listFields();
+  }
+  else {
+    alert("Invalid input. Numbers only please!");
+    initialise();
+  }
 }
 
 function deleteField(id){
-	readData();
-	var msg="are you sure you want to delete this field?";
-	if (confirm(msg)){
-		var tempArray = new Array();
-		var j=0;
-		for(var i=0;i<fieldData.length;i++){
-			
-			if (fieldData[i].id != id) {
-				tempArray[j] = fieldData[i];
-				j++;
-			}
-		}
-		fieldData=tempArray;
-		
-	}
-	storeData(fieldData);
-	$("#edit-field-screen").toggle();
-	$fieldsScreen.toggle();
-	$homeScreen.toggle();
-	listFields();
+  readData();
+  var msg="are you sure you want to delete this field?";
+  if (confirm(msg)){
+    var tempArray = new Array();
+    var j=0;
+    for(var i=0;i<fieldData.length;i++){
+
+      if (fieldData[i].id != id) {
+        tempArray[j] = fieldData[i];
+        j++;
+      }
+    }
+    fieldData=tempArray;
+
+  }
+  storeData(fieldData);
+  $("#edit-field-screen").toggle();
+  $fieldsScreen.toggle();
+  $homeScreen.toggle();
+  listFields();
 }
 
 //returns the date today
 function now(){
-	var d = new Date();
-	var curr_date = d.getDate();
-	var curr_month = d.getMonth();
-	var curr_year = d.getFullYear();
-	var returnString=(curr_date + "/" + curr_month + "/" + curr_year);
-	return returnString;
+  var d = new Date();
+  var curr_date = d.getDate();
+  var curr_month = d.getMonth();
+  var curr_year = d.getFullYear();
+  var returnString=(curr_date + "/" + curr_month + "/" + curr_year);
+  return returnString;
 }
 
 // perform calculations on cover and area
 function doCalculations(){
-	readData();
-	var totalCover=0;
-	var AFC=0;
-	var cover_LU=0;
-	var totalArea=0;
-	var totalAreaAFC=0;
+  readData();
+  var totalCover=0;
+  var AFC=0;
+  var cover_LU=0;
+  var totalArea=0;
+  var totalAreaAFC=0;
 
-	for(var i=1;i<fieldData.length;i++) {
-		var s=parseFloat(fieldData[i].area);
-		var c=parseFloat(fieldData[i].cover);
-		var cp=s*c;
-		totalCover+=cp;
-		totalArea+=s;
-		if(c>0)totalAreaAFC+=s;
-	}
-	AFC=Math.round(totalCover/totalAreaAFC);
-	totalArea=Math.round(totalArea*10)/10;
-	var calcs="";
-	calcs="<p>total cover= "+totalCover+"</p><p>AFC= "+AFC+"</p><p>total area= "+totalArea+"</p>";
-	$("#calculations").html(calcs);
-	
-		var coverHTML='';
-	$("#cover-items tbody").html(coverHTML);
-	for(var i=1;i<fieldData.length;i++){
-		
-		coverHTML+='<tr><td class="id">'+fieldData[i].id+'</td><td class="area">'+fieldData[i].area+'ha</td><td class="cover">'+fieldData[i].cover+'</td><td class="date">'+fixDate(fieldData[i].date)+'</td><td>'+Math.round(fieldData[i].cover*fieldData[i].area)+'</td></tr>';
-	}
-	$("#fields-report table tbody").html(coverHTML);
+  for(var i=1;i<fieldData.length;i++) {
+    var s=parseFloat(fieldData[i].area);
+    var c=parseFloat(fieldData[i].cover);
+    var cp=s*c;
+    totalCover+=cp;
+    totalArea+=s;
+    if(c>0)totalAreaAFC+=s;
+  }
+  AFC=Math.round(totalCover/totalAreaAFC);
+  totalArea=Math.round(totalArea*10)/10;
+  var calcs="";
+  calcs="<p>total cover= "+totalCover+"</p><p>AFC= "+AFC+"</p><p>total area= "+totalArea+"</p>";
+  $("#calculations").html(calcs);
+
+    var coverHTML='';
+  $("#cover-items tbody").html(coverHTML);
+  for(var i=1;i<fieldData.length;i++){
+
+    coverHTML+='<tr><td class="id">'+fieldData[i].id+'</td><td class="area">'+fieldData[i].area+'ha</td><td class="cover">'+fieldData[i].cover+'</td><td class="date">'+fixDate(fieldData[i].date)+'</td><td>'+Math.round(fieldData[i].cover*fieldData[i].area)+'</td></tr>';
+  }
+  $("#fields-report table tbody").html(coverHTML);
 
 }
 
 /*****************************************
 * multi dimensional sort
-*****************************************/		 
+*****************************************/
 function sortMultiDimensional(a,b)
 {
-	
-    // this sorts the array using the first element    
+
+    // this sorts the array using the first element
     return ((a[1] > b[1]) ? -1 : ((a[1] < b[1]) ? 1 : 0));
-} 
+}
 
 function doGraphs() {
-	$("#chart").html("");
-	readData();
-	var highestCP=0
-	var graphData= new Array();
-	var target=parseSettings("target");
-	var increment=target/fieldData.length;
-	
-	
-	var endpoint=0;
-	for(var i=0;i<fieldData.length;i++) {
-		
-			var s = parseFloat(fieldData[i].area);
-			var c = parseFloat(fieldData[i].cover);
-			var cp = s * c;
-			graphData[i] = new Array(i, cp, 0,0);
-		
-	}
-	
-	graphData.sort(sortMultiDimensional);
-	highestCP=graphData[0][1];
-	for(var j=0;j<graphData.length;j++) {
+  $("#chart").html("");
+  readData();
+  var highestCP=0
+  var graphData= new Array();
+  var target=parseSettings("target");
+  var increment=target/fieldData.length;
 
-		graphData[j][2]=Math.round(200*(graphData[j][1]/highestCP));
-		graphData[j][3]=(target-(j*increment));
-	}
-		//here you need to get the largest CP and divide all other CPs by it, giving you fractions of the biggest one.
-		//then you've got a Y axis set of coordinates.
-		//then you can draw DIVs a set width and the variable height, floated left within a container.
-	var graph="";
-	
-	
-	for (var j = 0; j < graphData.length; j++) {
-		if (graphData[j][0] != 0) {
-			if(graphData[j][3]-graphData[j][1]>50){
-				graph += "<div class='graphBar' style='height:";
-				graph += graphData[j][2] + "px;color:#ff0000;margin-top:-" + graphData[j][2] + "px'>" + graphData[j][0]+ "</div>";
-			}
-			else if(graphData[j][3]-graphData[j][1]<-50){
-				graph += "<div class='graphBar' style='height:";
-				graph += graphData[j][2] + "px;color:#00ff00;;margin-top:-" + graphData[j][2] + "px'>" + graphData[j][0] + "</div>";
-			}
-			else{
-				graph += "<div class='graphBar' style='height:";
-		graph += graphData[j][2] + "px;color:#ffffff;margin-top:-" + graphData[j][2] + "px'>" + graphData[j][0] + "</div>";
-			}
-		
-		}
-	}
-	
-	endpoint=graphData.length;
-	
-	$("#graph-legend-value").html(highestCP);
-	$("#chart").html(graph);
-	var w=fieldData.length*39;
-	$("#chart").css('width',w+'px');
+
+  var endpoint=0;
+  for(var i=0;i<fieldData.length;i++) {
+
+      var s = parseFloat(fieldData[i].area);
+      var c = parseFloat(fieldData[i].cover);
+      var cp = s * c;
+      graphData[i] = new Array(i, cp, 0,0);
+
+  }
+
+  graphData.sort(sortMultiDimensional);
+  highestCP=graphData[0][1];
+  for(var j=0;j<graphData.length;j++) {
+
+    graphData[j][2]=Math.round(200*(graphData[j][1]/highestCP));
+    graphData[j][3]=(target-(j*increment));
+  }
+    //here you need to get the largest CP and divide all other CPs by it, giving you fractions of the biggest one.
+    //then you've got a Y axis set of coordinates.
+    //then you can draw DIVs a set width and the variable height, floated left within a container.
+  var graph="";
+
+
+  for (var j = 0; j < graphData.length; j++) {
+    if (graphData[j][0] != 0) {
+      if(graphData[j][3]-graphData[j][1]>50){
+        graph += "<div class='graphBar' style='height:";
+        graph += graphData[j][2] + "px;color:#ff0000;margin-top:-" + graphData[j][2] + "px'>" + graphData[j][0]+ "</div>";
+      }
+      else if(graphData[j][3]-graphData[j][1]<-50){
+        graph += "<div class='graphBar' style='height:";
+        graph += graphData[j][2] + "px;color:#00ff00;;margin-top:-" + graphData[j][2] + "px'>" + graphData[j][0] + "</div>";
+      }
+      else{
+        graph += "<div class='graphBar' style='height:";
+    graph += graphData[j][2] + "px;color:#ffffff;margin-top:-" + graphData[j][2] + "px'>" + graphData[j][0] + "</div>";
+      }
+
+    }
+  }
+
+  endpoint=graphData.length;
+
+  $("#graph-legend-value").html(highestCP);
+  $("#chart").html(graph);
+  var w=fieldData.length*39;
+  $("#chart").css('width',w+'px');
 }
 
 //load up the saved values
 function doSettings(){
-	
-	$("#name-setting").val(parseSettings("name"));
-	$("#grass-target").val(parseSettings("target"));
+
+  $("#name-setting").val(parseSettings("name"));
+  $("#grass-target").val(parseSettings("target"));
 }
-// do Settings - save them 
+// do Settings - save them
 
 function saveSettings(){
-	var nameOnOrOff=$("#name-setting").val();
-	var targetCover=$("#grass-target").val();
-	var settingsString=nameOnOrOff+","+targetCover;	
-	widget.setPreferenceForKey(settingsString,"settings");
-	initialise();
+  var nameOnOrOff=$("#name-setting").val();
+  var targetCover=$("#grass-target").val();
+  var settingsString=nameOnOrOff+","+targetCover;
+  widget.setPreferenceForKey(settingsString,"settings");
+  initialise();
 }
 
 function doLoadSave(){
-	//populate the select box with the names of the user defined save slots
-	readSaveNames();
-	var output='';
-	for (var i = 0; i < saveNamesArray.length; i++) {
-		output+="<option value='"+(i+1)+"'>"+saveNamesArray[i]+"</option>";
-	}
-	$("#save-slot").html(output);
+  //populate the select box with the names of the user defined save slots
+  readSaveNames();
+  var output='';
+  for (var i = 0; i < saveNamesArray.length; i++) {
+    output+="<option value='"+(i+1)+"'>"+saveNamesArray[i]+"</option>";
+  }
+  $("#save-slot").html(output);
 }
 function loadData(n){
-	readSaveNames();
-	var msg="Do you want to load data from slot "+saveNamesArray[n-1]+"?";
-	if (confirm(msg)) {
-		var slot = "save" + n;
-		alert("slot=" + slot);
-		alert("saved data=" + widget.preferenceForKey(slot));
-		var loadData = widget.preferenceForKey(slot);
-		alert("data to be copied/loaded=" + loadData);
-		loadData += "";
-		widget.setPreferenceForKey(loadData, "data");
-		alert(widget.preferenceForKey("data"));
-		alert("data loaded from " + slot);
-		initialise();
-		}	
-	}
+  readSaveNames();
+  var msg="Do you want to load data from slot "+saveNamesArray[n-1]+"?";
+  if (confirm(msg)) {
+    var slot = "save" + n;
+    alert("slot=" + slot);
+    alert("saved data=" + widget.preferenceForKey(slot));
+    var loadData = widget.preferenceForKey(slot);
+    alert("data to be copied/loaded=" + loadData);
+    loadData += "";
+    widget.setPreferenceForKey(loadData, "data");
+    alert(widget.preferenceForKey("data"));
+    alert("data loaded from " + slot);
+    initialise();
+    }
+  }
 
 function saveData(n){
-	
-	readSaveNames();
-	var msg="Do you want to save your data to and overwrite slot "+saveNamesArray[n-1]+"?";
-	if(confirm(msg)){
-			var saveName=prompt("Save As:", "");
-			storeSaveName(n,saveName);
-			var slot="save slot "+n;
-			alert("Data saved in "+slot);
-			initialise();
-			}
 
-	}
+  readSaveNames();
+  var msg="Do you want to save your data to and overwrite slot "+saveNamesArray[n-1]+"?";
+  if(confirm(msg)){
+      var saveName=prompt("Save As:", "");
+      storeSaveName(n,saveName);
+      var slot="save slot "+n;
+      alert("Data saved in "+slot);
+      initialise();
+      }
+
+  }
 
 function readSaveNames(){
-	var saveNames=widget.preferenceForKey("saveList");
-//	alert(saveNames);
-	var commaCount=0;
-	var currentWord="";
-	
-	for(var i=0;i<saveNamesArray.length;i++){
-		
-		commaCount=saveNames.indexOf(',',0);
-		if(commaCount!=-1)currentWord=saveNames.substr(0,commaCount);
-		else currentWord=saveNames;
-		
-		var s=saveNames.length;
-		saveNames=saveNames.substr(commaCount+1,(s-commaCount));
-		saveNamesArray[i]=currentWord;
-		//alert(currentWord);
-	}
-	
-	
+  var saveNames=widget.preferenceForKey("saveList");
+//  alert(saveNames);
+  var commaCount=0;
+  var currentWord="";
+
+  for(var i=0;i<saveNamesArray.length;i++){
+
+    commaCount=saveNames.indexOf(',',0);
+    if(commaCount!=-1)currentWord=saveNames.substr(0,commaCount);
+    else currentWord=saveNames;
+
+    var s=saveNames.length;
+    saveNames=saveNames.substr(commaCount+1,(s-commaCount));
+    saveNamesArray[i]=currentWord;
+    //alert(currentWord);
+  }
+
+
 }
 
 function storeSaveName(save,name){
-	readSaveNames();
-	var position=parseInt(save);
-	var name=name;
-	for(var i=0;i<saveNamesArray.length;i++){
-//		alert(i+" "+saveNamesArray[i]);
-		if(i+1==position)saveNamesArray[i]=name;
-	}
-	var output="";
-	for(var i=0;i<saveNamesArray.length;i++){
-//		alert(i+" "+saveNamesArray[i]);
-		output+=saveNamesArray[i];
-		if(i!=4)output+=',';
-	}
-	widget.setPreferenceForKey(output,'saveList');
+  readSaveNames();
+  var position=parseInt(save);
+  var name=name;
+  for(var i=0;i<saveNamesArray.length;i++){
+//    alert(i+" "+saveNamesArray[i]);
+    if(i+1==position)saveNamesArray[i]=name;
+  }
+  var output="";
+  for(var i=0;i<saveNamesArray.length;i++){
+//    alert(i+" "+saveNamesArray[i]);
+    output+=saveNamesArray[i];
+    if(i!=4)output+=',';
+  }
+  widget.setPreferenceForKey(output,'saveList');
 }
 
 /*
@@ -1158,4 +1158,3 @@ if (!JSON) {
         };
     }
 }());
-
