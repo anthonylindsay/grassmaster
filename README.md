@@ -17,7 +17,7 @@ This application allows you to keep track of grass cover for your farm and plan
 livestock movements accordingly.
 
 - Create your fields. All you have to fill in is the area. You can edit existing fields or delete them.
-- Tour your farm and measure the cover for your fields. Input the cover once measured for each field.
+- Tour your farm and measure the cover for your fields. Input the grass cover once measured for each field.
 - Show the graphs to see the grass wedge. Try turning your phone on its side for a wider view.
 - Run the reports to get instant calculations, e.g. AFC, total area, total cover, etc.
 
