@@ -2,7 +2,7 @@ About GrassMaster
 ----------------------
 
 Grassmaster was originally released as a phone app for the Nokia Symbian
-platform. It has been refactored here to work on any modern browser.
+platform in 2011. It has been refactored here to work on any modern browser.
 
 All data is stored locally in the browser.
 
